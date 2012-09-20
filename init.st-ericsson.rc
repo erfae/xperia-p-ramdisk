@@ -30,8 +30,12 @@ on early-boot
     # and property service is initialized
     exec /sbin/fota-ua c
 
+    stop tad    
+
     # Start the offline charging (This blocks booting further in some cases)
-    exec /system/bin/chargemon
+    exec /sbin/bootrec    
+    
+    start tad
 
     # Make sure the crashsms/crashes are writable by crashmonitor
     
@@ -139,7 +143,7 @@ on fs
 
     # Mount system partition, resize fs
     exec /sbin/resize2fs /dev/block/mmcblk0p10
-    mount ext4 /dev/block/mmcblk0p10 /system ro
+    mount ext4 /dev/block/mmcblk0p10 /system rw
 
     mount ext4 /dev/block/mmcblk0p6 /modemfs nosuid nodev noatime
 
